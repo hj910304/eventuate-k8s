@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tmbr-zookeeper
+  labels:
+    app: tmber-event-api
+spec:
+  ports:
+  - name: http1 #http로  
+    port: 2181 #80으로 편함  
+    targetPort: 2181
+  - name: http2 #http로  
+    port: 2888 #80으로 편함  
+    targetPort: 2888
+  - name: http3 #http로  
+    port: 3888 #80으로 편함  
+    targetPort: 3888
+  selector:
+    app: tmber-event-api
+    version: '0.1'
+  type: ClusterIP
+#NodePort

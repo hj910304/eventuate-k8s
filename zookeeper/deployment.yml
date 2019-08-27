@@ -1,0 +1,31 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: tmbr-zookeeper
+  labels:
+    app: tmbr-zookeeper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tmbr-zookeeper
+  template:
+    metadata:
+      labels:
+        app: tmbr-zookeeper
+    spec:
+      containers:
+      - name: tmbr-zookeeper
+        image: twdd.icp.skt.com:8500/msa-training/eventuate-zookeeper:0.4.0.RELEASE
+        ports:
+        - containerPort: 2181
+        - containerPort: 2888
+        - containerPort: 3888
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 2048Mi
+          limits:
+            cpu: 2000m
+            memory: 2048Mi

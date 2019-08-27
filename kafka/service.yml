@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tmbr-kafka
+  labels:
+    app: tmbr-kafka
+spec:
+  ports:
+  - name: http #ddkanrjsk 아무거나 
+    port: 2181 #80으로 편함  
+    targetPort: 2181
+   selector: #pod를 연결하는 부분 
+    app: tmbr-kafka
+  type: clusterIp #nodeport라고 하면 외부에도 접근 가능, clusterIp라고 하면 외무에서 접근 불가능 
+#NodePort

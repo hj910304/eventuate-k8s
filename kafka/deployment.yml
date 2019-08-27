@@ -1,0 +1,36 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: tmbr-kafka
+  labels:
+    app: tmbr-kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tmbr-kafka
+  template:
+    metadata:
+      labels:
+        app: tmbr-kafka
+    spec:
+      containers:
+      - name: tmbr-kafka
+        env:
+         - name: ADVERTISED_HOST_NAME
+           value: 65.250.19.58
+         - name: KAFKA_HEAP_OPTS
+           value: -Xmx320m -Xms320m
+         - name: ZOOKEEPER_SERVERS
+           value: tmbr-zookeeper:2181
+        image: twdd.icp.skt.com:8500/msa-training/eventuate-kafka:0.3.0.RELEASE
+        ports:
+        - containerPort: 9092
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 2048Mi
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
