@@ -1,0 +1,38 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: tmbr-mysql
+  labels:
+    app: tmbr-mysql
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: tmbr-mysql
+  template:
+    metadata:
+      labels:
+        app: tmbr-mysql
+    spec:
+      containers:
+      - name: tmbr-mysql
+        env:
+         - name: MYSQL_ROOT_PASSWORD
+           value: rootpassword
+         - name: MYSQL_USER
+           value: mysqluser
+         - name: MYSQL_PASSWORD
+           value: mysqlpw
+        image: twdd.icp.skt.com:8500/msa-training/eventuate-mysql:0.5.0.RELEASE
+        ports:
+        - containerPort: 3306
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 2048Mi
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
