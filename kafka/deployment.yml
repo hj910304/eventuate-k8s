@@ -17,12 +17,13 @@ spec:
       containers:
       - name: tmbr-kafka
         env:
-         - name: ADVERTISED_HOST_NAME
-           value: 65.250.19.58
+          #hostname : 별도 설정해주지 않으면, 시스템에 있는 모든 인터페이스에 바인딩  
+          #- name: ADVERTISED_HOST_NAME
+           #   value: 61.250.19.58
          - name: KAFKA_HEAP_OPTS
            value: -Xmx320m -Xms320m
          - name: ZOOKEEPER_SERVERS
-           value: tmbr-zookeeper:2181
+           value: tmbr-zookeeper
         image: twdd.icp.skt.com:8500/msa-training/eventuate-kafka:0.3.0.RELEASE
         ports:
         - containerPort: 9092

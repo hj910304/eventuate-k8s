@@ -10,7 +10,7 @@ spec:
     port: 80 #80으로 편함  
     targetPort: 3306
     nodePort: 31585 #외부접근 port를 고정하고 싶은 경우에 30000~ 부터 할당
-   selector: #pod를 연결하는 부분 
+  selector: #pod를 연결하는 부분 
     app: tmbr-mysql
   type: NodePort #nodeport라고 하면 외부에도 접근 가능, clusterIp라고 하면 외무에서 접근 불가능 
 #NodePort

@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: tmbr-zookeeper
   labels:
-    app: tmber-event-api
+    app: tmbr-zookeeper
 spec:
   ports:
   - name: http1 #http로  
@@ -16,7 +16,6 @@ spec:
     port: 3888 #80으로 편함  
     targetPort: 3888
   selector:
-    app: tmber-event-api
-    version: '0.1'
+    app: tmbr-zookeeper
   type: ClusterIP
 #NodePort

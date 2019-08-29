@@ -1,33 +1,49 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: tmbr-mysql
+  name: tmbr-cdc
   labels:
-    app: tmbr-mysql
+    app: tmbr-cdc
 spec:
   replicas: 1
-  strategy:
-    type: RollingUpdate
   selector:
     matchLabels:
-      app: tmbr-mysql
+      app: tmbr-cdc
   template:
     metadata:
       labels:
-        app: tmbr-mysql
+        app: tmbr-cdc
     spec:
       containers:
-      - name: tmbr-mysql
+      - name: tmbr-cdc
         env:
-         - name: MYSQL_ROOT_PASSWORD
-           value: rootpassword
-         - name: MYSQL_USER
+         - name: SPRING_DATASOURCE_URL
+           value: jdbc:mysql://61.250.19.58:31585/eventuate
+         - name: SPRING_DATASOURCE_USERNAME
            value: mysqluser
-         - name: MYSQL_PASSWORD
+         - name: SPRING_DATASOURCE_PASSWORD
            value: mysqlpw
-        image: twdd.icp.skt.com:8500/msa-training/eventuate-mysql:0.5.0.RELEASE
+         - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+           value: com.mysql.jdbc.Driver
+         - name: EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS
+           value: tmbr-kafka:9092
+         - name: EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING
+           value: tmbr-zookeeper:2181
+         - name: EVENTUATELOCAL_CDC_DB_USER_NAME
+           value: root
+         - name: EVENTUATELOCAL_CDC_DB_PASSWORD
+           value: rootpassword
+         - name: EVENTUATELOCAL_CDC_READER_NAME
+           value: MySqlReader
+         - name: EVENTUATELOCAL_CDC_OFFSET_STORE_KEY
+           value: MySqlBinlog
+         - name: EVENTUATELOCAL_CDC_MYSQL_BINLOG_CLIENT_UNIQUE_ID
+           value: "1234"
+         - name: EVENTUATELOCAL_CDC_READ_OLD_DEBEZIUM_DB_OFFSET_STORAGE_TOPIC
+           value: "false"
+        image: twdd.icp.skt.com:8500/msa-training/eventuate-cdc:0.4.0.RELEASE
         ports:
-        - containerPort: 3306
+        - containerPort: 8099
         imagePullPolicy: Always
         resources:
           requests:
